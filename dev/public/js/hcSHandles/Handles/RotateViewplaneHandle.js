@@ -65,7 +65,7 @@ export class RotateViewplaneHandle extends StandardHandle {
     // Reset rotation back to start
     if (this._group.getManager()._resetSnapping) {
       for (let i = 0; i < this._startTargetMatrices.length; i++) {
-        const cachedStartRotationMatrix = this._startRotationMatrixCache[i];
+        const cachedStartRotationMatrix = this._startRotationMatrixCache[i].copy();
         viewer.model.setNodeMatrix(
           this._group._targetNodes[i],
           cachedStartRotationMatrix
