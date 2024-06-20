@@ -8,7 +8,10 @@
     <title>Web Viewer Desktop</title>
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/jquery.ui.touch-punch.min.js"
+    ></script>
     <script type="text/javascript" src="js/keymaster.min.js"></script>
     <script type="text/javascript" src="js/iscroll.min.js"></script>
     <script type="text/javascript" src="js/mobile-detect.min.js"></script>
@@ -19,10 +22,12 @@
       id="hwvScript"
     ></script>
 
-    
-
     <script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
-    <script type="text/javascript" src="js/web_viewer_ui.js?v=453b4b8" id="hwvUI"></script>
+    <script
+      type="text/javascript"
+      src="js/web_viewer_ui.js?v=453b4b8"
+      id="hwvUI"
+    ></script>
     <script type="text/javascript" src="js/goldenlayout.min.js"></script>
 
     <script
@@ -44,25 +49,25 @@
     <link rel="stylesheet" href="css/extra.css" type="text/css" />
 
     <link type="text/css" rel="stylesheet" href="css/goldenlayout-base.css" />
-    <link type="text/css" rel="stylesheet" href="css/goldenlayout-light-theme.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="css/goldenlayout-light-theme.css"
+    />
     <script type="text/javascript" src="js/goldenlayout.min.js"></script>
-        
+
     <link rel="stylesheet" href="css/Relationships.css" type="text/css" />
 
-  
     <script type="text/javascript" src="js/app/startup.js"></script>
     <script type="text/javascript" src="js/app/ViewerUtility.js"></script>
 
-
     <script type="module" id="viewerStartup">
-
-      import * as hcSHandles from './js/hcSHandles/hcSHandles.js';
+      import * as hcSHandles from "./js/hcSHandles/hcSHandles.js";
       window.shandles = hcSHandles;
 
-      window.hwv = null;      
+      window.hwv = null;
       window.ui = null;
       window.md = new MobileDetect(window.navigator.userAgent);
-
 
       window.onload = function () {
         startup();
@@ -88,15 +93,13 @@
               showToolbar: true,
             };
 
-           ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
+            ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
 
-              
-          hwv.setCallbacks({
+            hwv.setCallbacks({
               modelStructureReady: msready,
-          });
+            });
 
             hwv.start();
-         
           },
           function (errorReason) {
             var errorDialog = new Communicator.Ui.UiDialog("content");
@@ -106,7 +109,7 @@
           }
         );
       };
-    </script>    
+    </script>
   </head>
   <body>
     <div id="content">
@@ -212,7 +215,11 @@
           </div>
         </div>
         <div id="submenus">
-          <div id="redline-submenu" data-button="redline-button" class="toolbar-submenu submenus">
+          <div
+            id="redline-submenu"
+            data-button="redline-button"
+            class="toolbar-submenu submenus"
+          >
             <table>
               <tr>
                 <td>
@@ -252,7 +259,11 @@
               </tr>
             </table>
           </div>
-          <div id="camera-submenu" data-button="camera-button" class="toolbar-submenu submenus">
+          <div
+            id="camera-submenu"
+            data-button="camera-button"
+            class="toolbar-submenu submenus"
+          >
             <table>
               <tr>
                 <td>
@@ -286,7 +297,11 @@
               </tr>
             </table>
           </div>
-          <div id="edgeface-submenu" data-button="edgeface-button" class="toolbar-submenu submenus">
+          <div
+            id="edgeface-submenu"
+            data-button="edgeface-button"
+            class="toolbar-submenu submenus"
+          >
             <table>
               <tr>
                 <td>
@@ -431,7 +446,11 @@
               </tr>
             </table>
           </div>
-          <div id="click-submenu" data-button="click-button" class="toolbar-submenu submenus">
+          <div
+            id="click-submenu"
+            data-button="click-button"
+            class="toolbar-submenu submenus"
+          >
             <table>
               <tr>
                 <td>
@@ -500,9 +519,16 @@
             </table>
           </div>
           <div id="explode-slider" class="toolbar-submenu slider-menu submenus">
-            <div id="explosion-slider" style="height: 90px" class="toolbar-slider"></div>
+            <div
+              id="explosion-slider"
+              style="height: 90px"
+              class="toolbar-slider"
+            ></div>
           </div>
-          <div id="cuttingplane-submenu" class="toolbar-submenu cutting-plane submenus no-modal">
+          <div
+            id="cuttingplane-submenu"
+            class="toolbar-submenu cutting-plane submenus no-modal"
+          >
             <table>
               <tr>
                 <td>
@@ -585,7 +611,9 @@
         <div id="viewer-settings-dialog" class="hoops-ui-window">
           <!-- Header -->
           <div class="hoops-ui-window-header">
-            <span class="tab selected" id="settings-tab-label-general">General</span>
+            <span class="tab selected" id="settings-tab-label-general"
+              >General</span
+            >
             <span class="tab" id="settings-tab-label-walk">Walk</span>
             <span class="tab" id="settings-tab-label-drawing">Drawing</span>
             <span class="tab" id="settings-tab-label-floorplan">Floorplan</span>
@@ -597,16 +625,28 @@
             <div class="settings-group settings-group-general">
               <div class="settings-block">
                 <span id="settings-floorplan-active-text">Active:</span>
-                <input type="checkbox" id="settings-floorplan-active" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-floorplan-active"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <span id="settings-floorplan-track-camera-text">Track Camera:</span>
-                <input type="checkbox" id="settings-floorplan-track-camera" class="right-align" />
+                <span id="settings-floorplan-track-camera-text"
+                  >Track Camera:</span
+                >
+                <input
+                  type="checkbox"
+                  id="settings-floorplan-track-camera"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <span id="settings-floorplan-orientation-text">Orientation:</span>
+                <span id="settings-floorplan-orientation-text"
+                  >Orientation:</span
+                >
                 <select id="settings-floorplan-orientation" class="right-align">
                   <option value="0">North Up</option>
                   <option value="1">Avatar Up</option>
@@ -614,8 +654,13 @@
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <span id="settings-floorplan-auto-activate-text">Auto Activation:</span>
-                <select id="settings-floorplan-auto-activate" class="right-align">
+                <span id="settings-floorplan-auto-activate-text"
+                  >Auto Activation:</span
+                >
+                <select
+                  id="settings-floorplan-auto-activate"
+                  class="right-align"
+                >
                   <option value="0">Bim</option>
                   <option value="1">Bim + Walk</option>
                   <option value="2">Never</option>
@@ -624,7 +669,9 @@
               </div>
               <div class="settings-block">
                 <span id="settings-floorplan-feet-per-pixel-style">
-                  <span id="settings-floorplan-feet-per-pixel-text">Overlay Feet per Pixel:</span>
+                  <span id="settings-floorplan-feet-per-pixel-text"
+                    >Overlay Feet per Pixel:</span
+                  >
                   <input
                     type="number"
                     min="0"
@@ -636,7 +683,9 @@
               </div>
               <div class="settings-block">
                 <span id="settings-floorplan-zoom-style">
-                  <span id="settings-floorplan-zoom-text">Overlay Zoom Level:</span>
+                  <span id="settings-floorplan-zoom-text"
+                    >Overlay Zoom Level:</span
+                  >
                   <input
                     type="number"
                     min="0"
@@ -662,7 +711,9 @@
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <span id="settings-floorplan-border-opacity-text">Overlay Border Opacity:</span>
+                <span id="settings-floorplan-border-opacity-text"
+                  >Overlay Border Opacity:</span
+                >
                 <input
                   type="number"
                   min="0"
@@ -674,7 +725,9 @@
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <span id="settings-floorplan-avatar-opacity-text">Avatar Opacity:</span>
+                <span id="settings-floorplan-avatar-opacity-text"
+                  >Avatar Opacity:</span
+                >
                 <input
                   type="number"
                   min="0"
@@ -761,7 +814,10 @@
                   <label>Sheet Shadow</label>
                 </div>
                 <div>
-                  <input type="checkbox" id="settings-drawing-background-enabled" />
+                  <input
+                    type="checkbox"
+                    id="settings-drawing-background-enabled"
+                  />
                   <label>Show Sheet Background</label>
                 </div>
               </div>
@@ -782,9 +838,12 @@
               </div>
 
               <div class="settings-block" id="walk-navigation-keys">
-                <div id="walk-navigation-text" class="center-align bold">Navigation Keys</div>
+                <div id="walk-navigation-text" class="center-align bold">
+                  Navigation Keys
+                </div>
                 <div>
-                  <span id="walk-key-forward">W</span> / <span id="walk-key-left">A</span> /
+                  <span id="walk-key-forward">W</span> /
+                  <span id="walk-key-left">A</span> /
                   <span id="walk-key-backward">S</span> /
                   <span id="walk-key-right">D</span>
                   <span class="right-align">Move</span>
@@ -812,7 +871,12 @@
 
               <div class="settings-block">
                 <span id="walk-rotation-text">Rotation (Deg/s):</span>
-                <input type="number" min="0" id="settings-walk-rotation" class="right-align" />
+                <input
+                  type="number"
+                  min="0"
+                  id="settings-walk-rotation"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
 
@@ -831,7 +895,8 @@
               </div>
               <div class="settings-block">
                 <span id="walk-elevation-text"
-                  >Elevation Speed (<span id="elevation-speed-units">m</span>/s):</span
+                  >Elevation Speed (<span id="elevation-speed-units">m</span
+                  >/s):</span
                 >
                 <input
                   type="number"
@@ -857,7 +922,10 @@
                 <span id="walk-mouse-look-text">Enable Mouse Look:</span>
                 <input type="checkbox" id="settings-mouse-look-enabled" />
 
-                <span id="settings-mouse-look-style" class="grayed-out right-align">
+                <span
+                  id="settings-mouse-look-style"
+                  class="grayed-out right-align"
+                >
                   <label>Speed: </label>
                   <input id="settings-mouse-look-speed" type="number" />
                 </span>
@@ -885,7 +953,12 @@
               </div>
               <div class="settings-block">
                 <span class="framerate-text">Framerate (fps):</span>
-                <input type="number" min="0" id="settings-framerate" class="right-align" />
+                <input
+                  type="number"
+                  min="0"
+                  id="settings-framerate"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
@@ -902,12 +975,22 @@
               </div>
               <div class="settings-block">
                 <label for="settings-show-backfaces">Show Backfaces:</label>
-                <input type="checkbox" id="settings-show-backfaces" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-show-backfaces"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
-                <label for="settings-show-capping-geometry">Show Capping Geometry:</label>
-                <input type="checkbox" id="settings-show-capping-geometry" class="right-align" />
+                <label for="settings-show-capping-geometry"
+                  >Show Capping Geometry:</label
+                >
+                <input
+                  type="checkbox"
+                  id="settings-show-capping-geometry"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
@@ -921,12 +1004,20 @@
               </div>
               <div class="settings-block">
                 <span>Selection Honors Scene Visibility:</span>
-                <input type="checkbox" id="settings-select-scene-invisible" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-select-scene-invisible"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
                 <span>Rotate Around Camera Center:</span>
-                <input type="checkbox" id="settings-orbit-mode" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-orbit-mode"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
             </div>
@@ -951,14 +1042,22 @@
 
               <div class="settings-block">
                 <span>Enable Anti-Aliasing:</span>
-                <input type="checkbox" id="settings-anti-aliasing" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-anti-aliasing"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
 
               <div class="settings-block">
                 <div>
                   <span>Enable Bloom:</span>
-                  <input type="checkbox" id="settings-bloom-enabled" class="right-align" />
+                  <input
+                    type="checkbox"
+                    id="settings-bloom-enabled"
+                    class="right-align"
+                  />
                 </div>
                 <span id="settings-bloom-style" class="grayed-out">
                   <label>Intensity Scale:</label>
@@ -987,21 +1086,33 @@
               <div class="settings-block">
                 <div>
                   <span>Silhouette Edges:</span>
-                  <input type="checkbox" id="settings-silhouette-enabled" class="right-align" />
+                  <input
+                    type="checkbox"
+                    id="settings-silhouette-enabled"
+                    class="right-align"
+                  />
                 </div>
               </div>
 
               <div class="settings-block">
                 <div>
                   <span>Reflection Planes:</span>
-                  <input type="checkbox" id="settings-reflection-enabled" class="right-align" />
+                  <input
+                    type="checkbox"
+                    id="settings-reflection-enabled"
+                    class="right-align"
+                  />
                 </div>
               </div>
 
               <div class="settings-block">
                 <div>
                   <span>Enable Shadows:</span>
-                  <input type="checkbox" id="settings-shadow-enabled" class="right-align" />
+                  <input
+                    type="checkbox"
+                    id="settings-shadow-enabled"
+                    class="right-align"
+                  />
                 </div>
                 <span id="settings-shadow-style" class="grayed-out">
                   <span>Interactive:</span>
@@ -1032,12 +1143,20 @@
             <div class="settings-group settings-group-general">
               <div class="settings-block">
                 <span>Show Axis Triad:</span>
-                <input type="checkbox" id="settings-axis-triad" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-axis-triad"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
               <div class="settings-block">
                 <span>Show Nav Cube:</span>
-                <input type="checkbox" id="settings-nav-cube" class="right-align" />
+                <input
+                  type="checkbox"
+                  id="settings-nav-cube"
+                  class="right-align"
+                />
                 <span class="clear-both"></span>
               </div>
             </div>
@@ -1049,9 +1168,16 @@
                 <span>Enable Splats:</span>
                 <input type="checkbox" id="settings-splat-rendering-enabled" />
 
-                <span id="settings-splat-enabled-style" class="grayed-out right-align">
+                <span
+                  id="settings-splat-enabled-style"
+                  class="grayed-out right-align"
+                >
                   <label>Size: </label>
-                  <input id="settings-splat-rendering-size" step=".01" type="number" />
+                  <input
+                    id="settings-splat-rendering-size"
+                    step=".01"
+                    type="number"
+                  />
 
                   <label>Mode:</label>
                   <select id="settings-splat-rendering-point-size-unit">
@@ -1199,24 +1325,128 @@
       </div>
     </div>
 
-    <div id="settingsdiv" style="width:100%;height:100%;position:relative;font-size:12px">    
+    <div
+      id="settingsdiv"
+      style="width: 100%; height: 100%; position: relative; font-size: 12px"
+    >
       <h1>Settings</h1>
-      <input type="checkbox" id="relativecheck" onclick="toggleRelative()" checked="checked">Relatve Handles<br>
-      <input type="checkbox" id="useselectionpositioncheck" onclick="toggleUseSelectionPosition()">Place Handles at Selection Position<br>
-      <input type="checkbox" id="translatesnapcheck" onclick="toggleEnableTranslateSnapping()">Enable Translate Snap
-      <input type="text" id="translateSnappingEdit" onchange="toggleEnableTranslateSnapping()" style="width:50px;" value="10"><br>
-      <input type="checkbox" id="rotatesnapcheck" onclick="toggleEnableRotateSnapping()">Enable Rotate Snap
-      <input type="text" id="rotateSnappingEdit" onchange="toggleEnableRotateSnapping()" style="width:50px;" value="30"><br>
-      <span style="margin-left:5px;">Handle Size:</span><input onchange="handleScaleEditChange()" type="text" id="handleScaleEdit"  style="width:30px;" value="1">
-      <h1>Insert Handles</h1>
-      <input type="button" class="button-4" id="lockplanebutton" onclick='showRotateHandlesFromSelection()' value="Rotate">
-      <input type="button" class="button-4" id="lockplanebutton" onclick='showTranslateHandlesFromSelection()' value="Translate">
-      <input type="button" class="button-4" id="lockplanebutton" onclick='showScaleHandlesFromSelection()' value="Scale"><br>
+      <input
+        type="checkbox"
+        id="relativecheck"
+        onclick="toggleRelative()"
+        checked="checked"
+      />Relatve Handles<br />
+      <input
+        type="checkbox"
+        id="useselectionpositioncheck"
+        onclick="toggleUseSelectionPosition()"
+      />Place Handles at Selection Position<br />
+      <input
+        type="checkbox"
+        id="translatesnapcheck"
+        onclick="toggleEnableTranslateSnapping()"
+      />Enable Translate Snap
+      <input
+        type="text"
+        id="translateSnappingEdit"
+        onchange="toggleEnableTranslateSnapping()"
+        style="width: 50px"
+        value="10"
+      /><br />
+      <input
+        type="checkbox"
+        id="rotatesnapcheck"
+        onclick="toggleEnableRotateSnapping()"
+      />Enable Rotate Snap
+      <input
+        type="text"
+        id="rotateSnappingEdit"
+        onchange="toggleEnableRotateSnapping()"
+        style="width: 50px"
+        value="30"
+      /><br />
+      <span style="margin-left: 5px">Handle Size:</span
+      ><input
+        onchange="handleScaleEditChange()"
+        type="text"
+        id="handleScaleEdit"
+        style="width: 30px"
+        value="1"
+      />
+      <h1>Insert 2D-handles</h1>
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showRotateHandlesFromSelection([])"
+        value="Rotate"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showTranslateHandlesFromSelection([Communicator.Axis.X, Communicator.Axis.Y])"
+        value="Translate"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showScaleHandlesFromSelection([Communicator.Axis.X, Communicator.Axis.Y])"
+        value="Scale"
+      /><br />
+      <h1>Insert 3D-handles</h1>
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showRotateHandlesFromSelection()"
+        value="Rotate"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showTranslateHandlesFromSelection()"
+        value="Translate"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="showScaleHandlesFromSelection()"
+        value="Scale"
+      /><br />
       <h1>Misc</h1>
-      <input type="button" class="button-4" id="lockplanebutton" onclick='refreshHandles()' value="Refresh"><br>
+      <input
+        type="button"
+        class="button-4"
+        id="drawtrianglebutton"
+        onclick="drawTriangle()"
+        value="Draw triangle"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="refreshHandles()"
+        value="Refresh"
+      /><br />
       <h1>Undo/Redo</h1>
-      <input type="button" class="button-4" id="lockplanebutton" onclick='undo()' value="Undo">
-      <input type="button" class="button-4" id="lockplanebutton" onclick='redo()' value="Redo"><br>
-  </div>
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="undo()"
+        value="Undo"
+      />
+      <input
+        type="button"
+        class="button-4"
+        id="lockplanebutton"
+        onclick="redo()"
+        value="Redo"
+      /><br />
+    </div>
   </body>
 </html>
