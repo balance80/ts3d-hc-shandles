@@ -13,19 +13,15 @@ export class RotateHandleGroup extends StandardHandleGroup {
 
     const axisHandles = this._axisHandles;
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Z))
-    ) {
+    // Rotate around Z axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Z)) {
       this._handles.push(
         new RotateHandle(this, null, 0, new Communicator.Color(255, 0, 0))
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.X))
-    ) {
+    // Rotate around X axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.X)) {
       this._handles.push(
         new RotateHandle(
           this,
@@ -36,10 +32,8 @@ export class RotateHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Y))
-    ) {
+    // Rotate around Y axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Y)) {
       this._handles.push(
         new RotateHandle(
           this,
@@ -50,7 +44,8 @@ export class RotateHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (!axisHandles || (axisHandles && axisHandles.length == 3)) {
+    // Trackball rotation
+    if (!axisHandles || axisHandles.length == 3) {
       this._handles.push(
         new RotateTrackballHandle(
           this,
@@ -60,6 +55,7 @@ export class RotateHandleGroup extends StandardHandleGroup {
       );
     }
 
+    // Viewplane rotation
     this._handles.push(
       new RotateViewplaneHandle(this, new Communicator.Color(222, 222, 222))
     );

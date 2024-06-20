@@ -6,6 +6,7 @@ export class RotateViewplaneHandle extends StandardHandle {
     super(group);
     this._type = handleType.axisViewplane;
     this._color = color;
+    this._startRotationMatrixCache = [];
   }
 
   async generateBaseGeometry() {
@@ -52,6 +53,27 @@ export class RotateViewplaneHandle extends StandardHandle {
 
   async handleMouseMove(event) {
     let viewer = this._group.getViewer();
+
+    // Cache the start rotation matrices so we can reset the rotation if needed
+    if (this._startRotationMatrixCache.length === 0) {
+      for (let i = 0; i < this._startTargetMatrices.length; i++) {
+        const startRotationMatrix = this._startTargetMatrices[i].copy();
+        this._startRotationMatrixCache.push(startRotationMatrix);
+      }
+    }
+
+    // Reset rotation back to start
+    if (this._group.getManager()._resetSnapping) {
+      for (let i = 0; i < this._startTargetMatrices.length; i++) {
+        const cachedStartRotationMatrix = this._startRotationMatrixCache[i];
+        viewer.model.setNodeMatrix(
+          this._group._targetNodes[i],
+          cachedStartRotationMatrix
+        );
+      }
+      return;
+    }
+
     let cameraplane = utility.getCameraPlane(viewer, this._startPosition);
 
     let ray = viewer.view.raycastFromPoint(event.getPosition());
@@ -74,6 +96,7 @@ export class RotateViewplaneHandle extends StandardHandle {
         Math.round(angle / this._group.getManager()._rotateSnapping) *
         this._group.getManager()._rotateSnapping;
     }
+
     for (let i = 0; i < this._startTargetMatrices.length; i++) {
       let vec2 = utility.rotateNormal(
         Communicator.Matrix.inverse(

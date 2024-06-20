@@ -8,6 +8,7 @@ export class SHandleManager {
     this._viewer = viewer;
     this._translateSnapping = 0;
     this._rotateSnapping = 0;
+    this._resetSnapping = false;
     this._handleScale = 1.0;
     this._undoManager = new UndoManager(viewer);
     this._handles = [];
@@ -245,6 +246,10 @@ export class SHandleManager {
 
   setRotateSnapping(snapping) {
     this._rotateSnapping = snapping;
+  }
+
+  setResetSnapping(reset) {
+    this._resetSnapping = reset;
   }
 
   setHandleScale(scale) {

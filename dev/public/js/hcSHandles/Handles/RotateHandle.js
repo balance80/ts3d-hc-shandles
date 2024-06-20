@@ -8,6 +8,7 @@ export class RotateHandle extends StandardHandle {
     this._axis = axis;
     this._rotation = rot;
     this._color = color;
+    this._startRotationMatrixCache = [];    
   }
 
   async generateBaseGeometry() {
@@ -117,6 +118,27 @@ export class RotateHandle extends StandardHandle {
 
   async handleMouseMove(event) {
     let viewer = this._group.getViewer();
+
+    // Cache the start rotation matrices so we can reset the rotation if needed
+    if (this._startRotationMatrixCache.length === 0) {
+      for (let i = 0; i < this._startTargetMatrices.length; i++) {
+        const startRotationMatrix = this._startTargetMatrices[i].copy();
+        this._startRotationMatrixCache.push(startRotationMatrix);
+      }
+    }
+
+    // Reset rotation back to start
+    if (this._group.getManager()._resetSnapping) {
+      for (let i = 0; i < this._startTargetMatrices.length; i++) {
+        const cachedStartRotationMatrix = this._startRotationMatrixCache[i];
+        viewer.model.setNodeMatrix(
+          this._group._targetNodes[i],
+          cachedStartRotationMatrix
+        );
+      }
+      return;
+    }
+
     let newpos = new Communicator.Point3(0, 0, 0);
     let newnormal = new Communicator.Point3(0, 0, 1);
     utility.rotatePointAndNormal(this._startmatrix, newpos, newnormal);

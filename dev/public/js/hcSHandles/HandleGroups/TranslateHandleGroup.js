@@ -13,10 +13,8 @@ export class TranslateHandleGroup extends StandardHandleGroup {
 
     const axisHandles = this._axisHandles;
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Y))
-    ) {
+    // Y axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Y)) {
       this._handles.push(
         new TranslateHandle(this, null, 0, new Communicator.Color(255, 0, 0))
       );
@@ -31,10 +29,8 @@ export class TranslateHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Z))
-    ) {
+    // Z axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Z)) {
       this._handles.push(
         new TranslateHandle(
           this,
@@ -56,10 +52,8 @@ export class TranslateHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.X))
-    ) {
+    // X axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.X)) {
       this._handles.push(
         new TranslateHandle(
           this,
@@ -79,6 +73,7 @@ export class TranslateHandleGroup extends StandardHandleGroup {
       );
     }
 
+    // Viewplane handle
     if (!axisHandles || (axisHandles && axisHandles.length == 3)) {
       this._handles.push(
         new TranslateViewplaneHandle(

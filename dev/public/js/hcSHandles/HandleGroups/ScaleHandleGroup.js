@@ -12,10 +12,8 @@ export class ScaleHandleGroup extends StandardHandleGroup {
 
     const axisHandles = this._axisHandles;
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.X))
-    ) {
+    // X axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.X)) {
       this._handles.push(
         new ScaleHandle(
           this,
@@ -26,10 +24,8 @@ export class ScaleHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Y))
-    ) {
+    // Y axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Y)) {
       this._handles.push(
         new ScaleHandle(
           this,
@@ -40,17 +36,16 @@ export class ScaleHandleGroup extends StandardHandleGroup {
       );
     }
 
-    if (
-      !axisHandles ||
-      (axisHandles && axisHandles.includes(Communicator.Axis.Z))
-    ) {
+    // Z axis
+    if (!axisHandles || axisHandles.includes(Communicator.Axis.Z)) {
       this._handles.push(
         new ScaleHandle(this, null, 0, new Communicator.Color(0, 0, 255))
       );
     }
 
+    // Scale all
     this._handles.push(
-      new ScaleAllHandle(this, new Communicator.Color(255, 255, 255))
+      new ScaleAllHandle(this, new Communicator.Color(255, 0, 255))
     );
 
     for (let i = 0; i < this._handles.length; i++) {
