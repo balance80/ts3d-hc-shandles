@@ -1,5 +1,5 @@
-import { StandardHandle, handleType } from "./StandardHandle.js";
-import * as utility from "../utility.js";
+import { StandardHandle, handleType } from './StandardHandle.js';
+import * as utility from '../utility.js';
 
 export class RotateHandle extends StandardHandle {
   constructor(group, axis, rot, color) {
@@ -8,26 +8,14 @@ export class RotateHandle extends StandardHandle {
     this._axis = axis;
     this._rotation = rot;
     this._color = color;
-    this._startRotationMatrixCache = [];    
+    this._startRotationMatrixCache = [];
   }
 
   async generateBaseGeometry() {
     let outpoints = [];
-    Communicator.Util.generatePointsOnCircle(
-      outpoints,
-      new Communicator.Point3(0, 0, 0),
-      0.15,
-      64,
-      new Communicator.Point3(0, 0, 1)
-    );
-    let meshData = utility.calculateTubeMesh(
-      outpoints.splice(0, outpoints.length / 2),
-      0.0055,
-      10
-    );
-    this._group.getManager()._arcmesh = await this._group
-      .getViewer()
-      .model.createMesh(meshData);
+    Communicator.Util.generatePointsOnCircle(outpoints, new Communicator.Point3(0, 0, 0), 0.15, 64, new Communicator.Point3(0, 0, 1));
+    let meshData = utility.calculateTubeMesh(outpoints.splice(0, outpoints.length / 2), 0.0055, 10);
+    this._group.getManager()._arcmesh = await this._group.getViewer().model.createMesh(meshData);
   }
 
   async show() {
@@ -35,21 +23,15 @@ export class RotateHandle extends StandardHandle {
 
     let offaxismatrix = new Communicator.Matrix();
     if (this._axis) {
-      Communicator.Util.computeOffaxisRotation(
-        this._axis,
-        this._rotation,
-        offaxismatrix
-      );
+      Communicator.Util.computeOffaxisRotation(this._axis, this._rotation, offaxismatrix);
     }
-    this._nodeid = viewer.model.createNode(this._group._topNode, "");
+    this._nodeid = viewer.model.createNode(this._group._topNode, 'rotateHandle');
 
     if (!this._group.getManager()._arcmesh) {
       await this.generateBaseGeometry();
     }
 
-    let myMeshInstanceData = new Communicator.MeshInstanceData(
-      this._group.getManager()._arcmesh
-    );
+    let myMeshInstanceData = new Communicator.MeshInstanceData(this._group.getManager()._arcmesh);
     await viewer.model.createMeshInstance(myMeshInstanceData, this._nodeid);
     if (this._axis) {
       viewer.model.setNodeMatrix(this._nodeid, offaxismatrix);
@@ -82,35 +64,21 @@ export class RotateHandle extends StandardHandle {
 
     let xc1 = utility.rotateNormal(mat, new Communicator.Point3(0, 0, 1));
     //        console.log(xc1.x + " " + xc1.y + " " + xc1.z);
-    let xc2 = Communicator.Point3.subtract(
-      viewer.view.getCamera().getTarget(),
-      camPos
-    ).normalize();
+    let xc2 = Communicator.Point3.subtract(viewer.view.getCamera().getTarget(), camPos).normalize();
     if (xc1.equalsWithTolerance(xc2, 0.01)) {
       return;
     }
     let matinverse = Communicator.Matrix.inverse(mat);
     let camPos2 = matinverse.transform(camPos);
-    let plane = Communicator.Plane.createFromPointAndNormal(
-      new Communicator.Point3(0, 0, 0),
-      new Communicator.Point3(0, 0, 1)
-    );
+    let plane = Communicator.Plane.createFromPointAndNormal(new Communicator.Point3(0, 0, 0), new Communicator.Point3(0, 0, 1));
     let res = utility.closestPointOnPlane(plane, camPos2);
     res.normalize();
-    let angle = utility.signedAngle(
-      new Communicator.Point3(-1, 0, 0),
-      res,
-      new Communicator.Point3(0, 0, 1)
-    );
+    let angle = utility.signedAngle(new Communicator.Point3(-1, 0, 0), res, new Communicator.Point3(0, 0, 1));
     if (isNaN(angle)) {
       return;
     }
     let offaxismatrix = new Communicator.Matrix();
-    Communicator.Util.computeOffaxisRotation(
-      new Communicator.Point3(0, 0, 1),
-      angle,
-      offaxismatrix
-    );
+    Communicator.Util.computeOffaxisRotation(new Communicator.Point3(0, 0, 1), angle, offaxismatrix);
 
     let resmatrix = Communicator.Matrix.multiply(offaxismatrix, matx);
     await viewer.model.setNodeMatrix(this._nodeid, resmatrix);
@@ -131,10 +99,7 @@ export class RotateHandle extends StandardHandle {
     if (this._group.getManager()._resetSnapping) {
       for (let i = 0; i < this._startTargetMatrices.length; i++) {
         const cachedStartRotationMatrix = this._startRotationMatrixCache[i].copy();
-        viewer.model.setNodeMatrix(
-          this._group._targetNodes[i],
-          cachedStartRotationMatrix
-        );
+        viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
       }
       return;
     }
@@ -150,64 +115,38 @@ export class RotateHandle extends StandardHandle {
     cameraplane.intersectsRay(ray, planeIntersection);
 
     let rplane = Communicator.Plane.createFromPointAndNormal(newpos, newnormal);
-    let adist = Math.abs(
-      Communicator.Util.computeAngleBetweenVector(newnormal, cameraplane.normal)
-    );
+    let adist = Math.abs(Communicator.Util.computeAngleBetweenVector(newnormal, cameraplane.normal));
 
     let out = new Communicator.Point3();
     if (adist > 85 && adist < 95) {
       out = utility.closestPointOnPlane(rplane, planeIntersection);
     } else {
       let ray = viewer.view.raycastFromPoint(event.getPosition());
-      let cameraplane = Communicator.Plane.createFromPointAndNormal(
-        newpos,
-        newnormal
-      );
+      let cameraplane = Communicator.Plane.createFromPointAndNormal(newpos, newnormal);
       cameraplane.intersectsRay(ray, out);
     }
 
-    let angle = utility.signedAngleFromPoint(
-      this._startPosition,
-      out,
-      newnormal,
-      newpos
-    );
+    let angle = utility.signedAngleFromPoint(this._startPosition, out, newnormal, newpos);
 
     if (this._group.getManager()._rotateSnapping) {
-      angle =
-        Math.round(angle / this._group.getManager()._rotateSnapping) *
-        this._group.getManager()._rotateSnapping;
+      angle = Math.round(angle / this._group.getManager()._rotateSnapping) * this._group.getManager()._rotateSnapping;
     }
 
     for (let i = 0; i < this._startTargetMatrices.length; i++) {
       let newnormal2 = utility.rotateNormal(
-        Communicator.Matrix.inverse(
-          viewer.model.getNodeNetMatrix(
-            viewer.model.getNodeParent(this._group._targetNodes[i])
-          )
-        ),
+        Communicator.Matrix.inverse(viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))),
         newnormal
       );
 
       let offaxismatrix = new Communicator.Matrix();
-      Communicator.Util.computeOffaxisRotation(
-        newnormal2,
-        angle,
-        offaxismatrix
-      );
+      Communicator.Util.computeOffaxisRotation(newnormal2, angle, offaxismatrix);
       let center = Communicator.Matrix.inverse(
-        viewer.model.getNodeNetMatrix(
-          viewer.model.getNodeParent(this._group._targetNodes[i])
-        )
+        viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
       ).transform(this._group._targetCenter);
 
       viewer.model.setNodeMatrix(
         this._group._targetNodes[i],
-        utility.performSubnodeRotation(
-          center,
-          this._startTargetMatrices[i],
-          offaxismatrix
-        )
+        utility.performSubnodeRotation(center, this._startTargetMatrices[i], offaxismatrix)
       );
     }
 

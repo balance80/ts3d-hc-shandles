@@ -1,5 +1,5 @@
-import { StandardHandle, handleType } from "./StandardHandle.js";
-import * as utility from "../utility.js";
+import { StandardHandle, handleType } from './StandardHandle.js';
+import * as utility from '../utility.js';
 
 export class RotateViewplaneHandle extends StandardHandle {
   constructor(group, color) {
@@ -11,32 +11,22 @@ export class RotateViewplaneHandle extends StandardHandle {
 
   async generateBaseGeometry() {
     let outpoints = [];
-    Communicator.Util.generatePointsOnCircle(
-      outpoints,
-      new Communicator.Point3(0, 0, 0),
-      0.15,
-      64,
-      new Communicator.Point3(0, 0, 1)
-    );
+    Communicator.Util.generatePointsOnCircle(outpoints, new Communicator.Point3(0, 0, 0), 0.15, 64, new Communicator.Point3(0, 0, 1));
 
     let meshData = utility.calculateTubeMesh(outpoints, 0.0045, 10);
-    this._group.getManager()._circleMesh = await this._group
-      .getViewer()
-      .model.createMesh(meshData);
+    this._group.getManager()._circleMesh = await this._group.getViewer().model.createMesh(meshData);
   }
 
   async show() {
     let viewer = this._group.getViewer();
 
-    this._nodeid = viewer.model.createNode(this._group._topNode2, "");
+    this._nodeid = viewer.model.createNode(this._group._topNode2, 'rotateViewplaneHandle');
 
     if (!this._group.getManager()._circleMesh) {
       await this.generateBaseGeometry();
     }
 
-    let myMeshInstanceData = new Communicator.MeshInstanceData(
-      this._group.getManager()._circleMesh
-    );
+    let myMeshInstanceData = new Communicator.MeshInstanceData(this._group.getManager()._circleMesh);
     await viewer.model.createMeshInstance(myMeshInstanceData, this._nodeid);
 
     let scalematrix = new Communicator.Matrix();
@@ -44,11 +34,7 @@ export class RotateViewplaneHandle extends StandardHandle {
     viewer.model.setNodeMatrix(this._nodeid, scalematrix);
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
     await super.show();
-    viewer.model.setInstanceModifier(
-      Communicator.InstanceModifier.ScreenOriented,
-      [this._nodeid],
-      true
-    );
+    viewer.model.setInstanceModifier(Communicator.InstanceModifier.ScreenOriented, [this._nodeid], true);
   }
 
   async handleMouseMove(event) {
@@ -66,10 +52,7 @@ export class RotateViewplaneHandle extends StandardHandle {
     if (this._group.getManager()._resetSnapping) {
       for (let i = 0; i < this._startTargetMatrices.length; i++) {
         const cachedStartRotationMatrix = this._startRotationMatrixCache[i].copy();
-        viewer.model.setNodeMatrix(
-          this._group._targetNodes[i],
-          cachedStartRotationMatrix
-        );
+        viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
       }
       return;
     }
@@ -84,26 +67,15 @@ export class RotateViewplaneHandle extends StandardHandle {
     let intersectionPoint2 = new Communicator.Point3();
     cameraplane.intersectsRay(ray2, intersectionPoint2);
 
-    let angle = utility.signedAngleFromPoint(
-      intersectionPoint2,
-      intersectionPoint1,
-      cameraplane.normal,
-      this._group._targetCenter
-    );
+    let angle = utility.signedAngleFromPoint(intersectionPoint2, intersectionPoint1, cameraplane.normal, this._group._targetCenter);
 
     if (this._group.getManager()._rotateSnapping) {
-      angle =
-        Math.round(angle / this._group.getManager()._rotateSnapping) *
-        this._group.getManager()._rotateSnapping;
+      angle = Math.round(angle / this._group.getManager()._rotateSnapping) * this._group.getManager()._rotateSnapping;
     }
 
     for (let i = 0; i < this._startTargetMatrices.length; i++) {
       let vec2 = utility.rotateNormal(
-        Communicator.Matrix.inverse(
-          viewer.model.getNodeNetMatrix(
-            viewer.model.getNodeParent(this._group._targetNodes[i])
-          )
-        ),
+        Communicator.Matrix.inverse(viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))),
         cameraplane.normal
       );
 
@@ -111,18 +83,12 @@ export class RotateViewplaneHandle extends StandardHandle {
       Communicator.Util.computeOffaxisRotation(vec2, angle, offaxismatrix);
 
       let center = Communicator.Matrix.inverse(
-        viewer.model.getNodeNetMatrix(
-          viewer.model.getNodeParent(this._group._targetNodes[i])
-        )
+        viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
       ).transform(this._group._targetCenter);
 
       viewer.model.setNodeMatrix(
         this._group._targetNodes[i],
-        utility.performSubnodeRotation(
-          center,
-          this._startTargetMatrices[i],
-          offaxismatrix
-        )
+        utility.performSubnodeRotation(center, this._startTargetMatrices[i], offaxismatrix)
       );
     }
 

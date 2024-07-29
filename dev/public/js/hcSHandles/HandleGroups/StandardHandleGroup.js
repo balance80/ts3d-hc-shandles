@@ -55,11 +55,7 @@ export class StandardHandleGroup {
 
   updateHandle() {
     let scaleMatrix = new Communicator.Matrix();
-    scaleMatrix.setScaleComponent(
-      this._manager._handleScale,
-      this._manager._handleScale,
-      this._manager._handleScale
-    );
+    scaleMatrix.setScaleComponent(this._manager._handleScale, this._manager._handleScale, this._manager._handleScale);
 
     let startRot = this._calculateStartMatrix();
     let center2 = this._targetCenter;
@@ -78,11 +74,7 @@ export class StandardHandleGroup {
   async show(nodeids, center = null, rotation = null) {
     this._targetNodes = nodeids;
     let scaleMatrix = new Communicator.Matrix();
-    scaleMatrix.setScaleComponent(
-      this._manager._handleScale,
-      this._manager._handleScale,
-      this._manager._handleScale
-    );
+    scaleMatrix.setScaleComponent(this._manager._handleScale, this._manager._handleScale, this._manager._handleScale);
     if (!center) {
       let bounds = await this._viewer.model.getNodesBounding(nodeids);
       this._targetCenter = bounds.center();
@@ -90,28 +82,18 @@ export class StandardHandleGroup {
       this._targetCenter = center.copy();
     }
 
-    this._targetCenterLocal = Communicator.Matrix.inverse(
-      this._viewer.model.getNodeNetMatrix(this._targetNodes[0])
-    ).transform(this._targetCenter);
+    this._targetCenterLocal = Communicator.Matrix.inverse(this._viewer.model.getNodeNetMatrix(this._targetNodes[0])).transform(
+      this._targetCenter
+    );
 
     this._extraRotation = rotation;
 
-    this._topNode = this._viewer.model.createNode(
-      this._manager._handlenode,
-      ""
-    );
-    this._topNode2 = this._viewer.model.createNode(
-      this._manager._handlenode,
-      ""
-    );
+    this._topNode = this._viewer.model.createNode(this._manager._handlenode, 'topNode');
+    this._topNode2 = this._viewer.model.createNode(this._manager._handlenode, 'topNode2');
     let startRot = this._calculateStartMatrix();
 
     let tmatrix2 = new Communicator.Matrix();
-    tmatrix2.setTranslationComponent(
-      this._targetCenter.x,
-      this._targetCenter.y,
-      this._targetCenter.z
-    );
+    tmatrix2.setTranslationComponent(this._targetCenter.x, this._targetCenter.y, this._targetCenter.z);
     tmatrix2 = Communicator.Matrix.multiply(scaleMatrix, tmatrix2);
 
     let b = Communicator.Matrix.multiply(startRot, tmatrix2);
@@ -123,24 +105,10 @@ export class StandardHandleGroup {
   _calculateStartMatrix() {
     let normalizedMatrix = new Communicator.Matrix();
     if (this._relative) {
-      let matrix = this._viewer.model
-        .getNodeNetMatrix(this._targetNodes[0])
-        .copy();
-      let row1 = new Communicator.Point3(
-        matrix.m[0],
-        matrix.m[1],
-        matrix.m[2]
-      ).normalize();
-      let row2 = new Communicator.Point3(
-        matrix.m[4],
-        matrix.m[5],
-        matrix.m[6]
-      ).normalize();
-      let row3 = new Communicator.Point3(
-        matrix.m[8],
-        matrix.m[9],
-        matrix.m[10]
-      ).normalize();
+      let matrix = this._viewer.model.getNodeNetMatrix(this._targetNodes[0]).copy();
+      let row1 = new Communicator.Point3(matrix.m[0], matrix.m[1], matrix.m[2]).normalize();
+      let row2 = new Communicator.Point3(matrix.m[4], matrix.m[5], matrix.m[6]).normalize();
+      let row3 = new Communicator.Point3(matrix.m[8], matrix.m[9], matrix.m[10]).normalize();
 
       normalizedMatrix.m[0] = row1.x;
       normalizedMatrix.m[1] = row1.y;
@@ -156,10 +124,7 @@ export class StandardHandleGroup {
     }
 
     if (this._extraRotation) {
-      normalizedMatrix = Communicator.Matrix.multiply(
-        this._extraRotation,
-        normalizedMatrix
-      );
+      normalizedMatrix = Communicator.Matrix.multiply(this._extraRotation, normalizedMatrix);
     }
 
     return normalizedMatrix;
