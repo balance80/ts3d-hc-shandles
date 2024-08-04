@@ -21,7 +21,7 @@ export class ScaleAllHandle extends StandardHandle {
 
     let scalematrix = new Communicator.Matrix();
     scalematrix.setScaleComponent(0.02, 0.02, 0.02);
-    viewer.model.setNodeMatrix(this._nodeid, scalematrix);
+    await viewer.model.setNodeMatrix(this._nodeid, scalematrix);
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
     await super.show();
   }
@@ -53,8 +53,8 @@ export class ScaleAllHandle extends StandardHandle {
       let resmatrix2 = Communicator.Matrix.multiply(resmatrix1, tmatrix);
       let resmatrix3 = Communicator.Matrix.multiply(resmatrix2, this._startTargetMatrices[i]);
 
-      viewer.model.setNodeMatrix(this._group._targetNodes[i], resmatrix3);
+      await viewer.model.setNodeMatrix(this._group._targetNodes[i], resmatrix3);
     }
-    super.handleMouseMove(event);
+    await super.handleMouseMove(event);
   }
 }

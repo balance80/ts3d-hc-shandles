@@ -17,9 +17,9 @@ export class RotateUndo {
     return s;
   }
 
-  do(viewer) {
+  async do(viewer) {
     for (let i = 0; i < this.nodeids.length; i++) {
-      viewer.model.setNodeMatrix(this.nodeids[i], this.matrices[i]);
+      await viewer.model.setNodeMatrix(this.nodeids[i], this.matrices[i]);
     }
   }
 }
@@ -40,7 +40,7 @@ export class UndoManager {
     this.undoTop = this.undoPointer;
   }
 
-  undo() {
+  async undo() {
     if (this.undoPointer > 0) {
       if (this.undoPointer == this.undoTop) {
         let s = this.undoStack[this.undoPointer - 1][0].clone(this._viewer);
@@ -50,16 +50,14 @@ export class UndoManager {
       }
 
       this.undoPointer--;
-      for (let i = 0; i < this.undoStack[this.undoPointer].length; i++)
-        this.undoStack[this.undoPointer][i].do(this._viewer);
+      for (let i = 0; i < this.undoStack[this.undoPointer].length; i++) await this.undoStack[this.undoPointer][i].do(this._viewer);
     }
   }
 
-  redo() {
+  async redo() {
     if (this.undoPointer < this.undoTop) {
       this.undoPointer++;
-      for (let i = 0; i < this.undoStack[this.undoPointer].length; i++)
-        this.undoStack[this.undoPointer][i].do(this._viewer);
+      for (let i = 0; i < this.undoStack[this.undoPointer].length; i++) await this.undoStack[this.undoPointer][i].do(this._viewer);
     }
   }
 }

@@ -34,7 +34,7 @@ export class RotateHandle extends StandardHandle {
     let myMeshInstanceData = new Communicator.MeshInstanceData(this._group.getManager()._arcmesh);
     await viewer.model.createMeshInstance(myMeshInstanceData, this._nodeid);
     if (this._axis) {
-      viewer.model.setNodeMatrix(this._nodeid, offaxismatrix);
+      await viewer.model.setNodeMatrix(this._nodeid, offaxismatrix);
     }
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
 
@@ -42,12 +42,12 @@ export class RotateHandle extends StandardHandle {
     await this.orientToCamera(viewer.view.getCamera());
   }
 
-  cameraUpdate(camera) {
-    this.orientToCamera(camera);
+  async cameraUpdate(camera) {
+    await this.orientToCamera(camera);
   }
 
-  update(camera) {
-    this.orientToCamera(camera);
+  async update(camera) {
+    await this.orientToCamera(camera);
   }
 
   async orientToCamera(camera) {
@@ -99,7 +99,7 @@ export class RotateHandle extends StandardHandle {
     if (this._group.getManager()._resetSnapping) {
       for (let i = 0; i < this._startTargetMatrices.length; i++) {
         const cachedStartRotationMatrix = this._startRotationMatrixCache[i].copy();
-        viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
+        await viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
       }
       return;
     }
@@ -144,13 +144,13 @@ export class RotateHandle extends StandardHandle {
         viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
       ).transform(this._group._targetCenter);
 
-      viewer.model.setNodeMatrix(
+      await viewer.model.setNodeMatrix(
         this._group._targetNodes[i],
         utility.performSubnodeRotation(center, this._startTargetMatrices[i], offaxismatrix)
       );
     }
 
-    this._group.updateHandle();
-    super.handleMouseMove(event);
+    await this._group.updateHandle();
+    await super.handleMouseMove(event);
   }
 }

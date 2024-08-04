@@ -34,7 +34,7 @@ export class SHandleOperator extends Communicator.Operator.OperatorBase {
         this._selectedHandleGroup = handleGroup;
         this._selectedHandle = handleGroup.getHandle(nodeid);
 
-        this._selectedHandle.handleMouseDown(event, selection);
+        await this._selectedHandle.handleMouseDown(event, selection);
         this.oldColor = [this._selectedHandle._color.copy()];
         this._viewer.model.setNodesFaceColor([nodeid], new Communicator.Color(255, 255, 0));
         this.oldNodeId = nodeid;
@@ -50,7 +50,7 @@ export class SHandleOperator extends Communicator.Operator.OperatorBase {
 
     if (this._selectedHandleGroup) {
       await this._selectedHandle.handleMouseMove(event);
-      this._manager.refreshAll(this._selectedHandleGroup);
+      await this._manager.refreshAll(this._selectedHandleGroup);
       this.isHandled = true;
       event.setHandled(true);
     } else {

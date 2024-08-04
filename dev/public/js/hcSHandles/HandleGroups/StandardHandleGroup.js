@@ -20,10 +20,10 @@ export class StandardHandleGroup {
     this._viewer.model.deleteNode(this._handlenode);
   }
 
-  setRelative(relative) {
+  async setRelative(relative) {
     this._relative = relative;
     if (this._topNode) {
-      this.updateHandle();
+      await this.updateHandle();
     }
   }
 
@@ -39,9 +39,9 @@ export class StandardHandleGroup {
     return this._axisHandles;
   }
 
-  cameraUpdate(camera) {
+  async cameraUpdate(camera) {
     for (let i = 0; i < this._handles.length; i++) {
-      this._handles[i].cameraUpdate(camera);
+      await this._handles[i].cameraUpdate(camera);
     }
   }
 
@@ -53,7 +53,7 @@ export class StandardHandleGroup {
     }
   }
 
-  updateHandle() {
+  async updateHandle() {
     let scaleMatrix = new Communicator.Matrix();
     scaleMatrix.setScaleComponent(this._manager._handleScale, this._manager._handleScale, this._manager._handleScale);
 
@@ -64,10 +64,10 @@ export class StandardHandleGroup {
     tmatrix2 = Communicator.Matrix.multiply(scaleMatrix, tmatrix2);
 
     let b = Communicator.Matrix.multiply(startRot, tmatrix2);
-    this._viewer.model.setNodeMatrix(this._topNode, b);
-    this._viewer.model.setNodeMatrix(this._topNode2, tmatrix2);
+    await this._viewer.model.setNodeMatrix(this._topNode, b);
+    await this._viewer.model.setNodeMatrix(this._topNode2, tmatrix2);
     for (let i = 0; i < this._handles.length; i++) {
-      this._handles[i].update(this._viewer.view.getCamera());
+      await this._handles[i].update(this._viewer.view.getCamera());
     }
   }
 
@@ -98,8 +98,8 @@ export class StandardHandleGroup {
 
     let b = Communicator.Matrix.multiply(startRot, tmatrix2);
 
-    this._viewer.model.setNodeMatrix(this._topNode, b);
-    this._viewer.model.setNodeMatrix(this._topNode2, tmatrix2);
+    await this._viewer.model.setNodeMatrix(this._topNode, b);
+    await this._viewer.model.setNodeMatrix(this._topNode2, tmatrix2);
   }
 
   _calculateStartMatrix() {

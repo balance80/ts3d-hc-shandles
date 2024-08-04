@@ -42,7 +42,7 @@ export class ScaleHandle extends StandardHandle {
     await viewer.model.createMeshInstance(myMeshInstanceData, this._nodeid);
 
     if (this._axis) {
-      viewer.model.setNodeMatrix(this._nodeid, offaxismatrix);
+      await viewer.model.setNodeMatrix(this._nodeid, offaxismatrix);
     }
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
 
@@ -100,8 +100,8 @@ export class ScaleHandle extends StandardHandle {
         resmatrix3 = Communicator.Matrix.multiply(this._startTargetMatrices[i], resmatrix2);
       }
 
-      viewer.model.setNodeMatrix(this._group._targetNodes[i], resmatrix3);
+      await viewer.model.setNodeMatrix(this._group._targetNodes[i], resmatrix3);
     }
-    super.handleMouseMove(event);
+    await super.handleMouseMove(event);
   }
 }

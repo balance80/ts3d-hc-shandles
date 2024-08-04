@@ -31,7 +31,7 @@ export class RotateViewplaneHandle extends StandardHandle {
 
     let scalematrix = new Communicator.Matrix();
     scalematrix.setScaleComponent(1.2, 1.2, 1.2);
-    viewer.model.setNodeMatrix(this._nodeid, scalematrix);
+    await viewer.model.setNodeMatrix(this._nodeid, scalematrix);
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
     await super.show();
     viewer.model.setInstanceModifier(Communicator.InstanceModifier.ScreenOriented, [this._nodeid], true);
@@ -52,7 +52,7 @@ export class RotateViewplaneHandle extends StandardHandle {
     if (this._group.getManager()._resetSnapping) {
       for (let i = 0; i < this._startTargetMatrices.length; i++) {
         const cachedStartRotationMatrix = this._startRotationMatrixCache[i].copy();
-        viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
+        await viewer.model.setNodeMatrix(this._group._targetNodes[i], cachedStartRotationMatrix);
       }
       return;
     }
@@ -86,13 +86,13 @@ export class RotateViewplaneHandle extends StandardHandle {
         viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
       ).transform(this._group._targetCenter);
 
-      viewer.model.setNodeMatrix(
+      await viewer.model.setNodeMatrix(
         this._group._targetNodes[i],
         utility.performSubnodeRotation(center, this._startTargetMatrices[i], offaxismatrix)
       );
     }
 
-    this._group.updateHandle();
-    super.handleMouseMove(event);
+    await this._group.updateHandle();
+    await super.handleMouseMove(event);
   }
 }

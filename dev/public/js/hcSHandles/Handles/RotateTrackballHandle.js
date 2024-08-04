@@ -23,7 +23,7 @@ export class RotateTrackballHandle extends StandardHandle {
 
     let scalematrix = new Communicator.Matrix();
     scalematrix.setScaleComponent(0.14, 0.14, 0.14);
-    viewer.model.setNodeMatrix(this._nodeid, scalematrix);
+    await viewer.model.setNodeMatrix(this._nodeid, scalematrix);
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
     viewer.model.setNodesOpacity([this._nodeid], this._opacity);
 
@@ -60,14 +60,14 @@ export class RotateTrackballHandle extends StandardHandle {
           viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
         ).transform(this._group._targetCenter);
 
-        viewer.model.setNodeMatrix(
+        await viewer.model.setNodeMatrix(
           this._group._targetNodes[i],
           utility.performSubnodeRotation(center, this._startTargetMatrices[i], qmat2)
         );
       }
 
-      this._group.updateHandle();
-      super.handleMouseMove(event);
+      await this._group.updateHandle();
+      await super.handleMouseMove(event);
     }
   }
 }

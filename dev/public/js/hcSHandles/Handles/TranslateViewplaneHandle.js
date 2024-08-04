@@ -21,7 +21,7 @@ export class TranslateViewplaneHandle extends StandardHandle {
 
     let scalematrix = new Communicator.Matrix();
     scalematrix.setScaleComponent(0.015, 0.015, 0.015);
-    viewer.model.setNodeMatrix(this._nodeid, scalematrix);
+    await viewer.model.setNodeMatrix(this._nodeid, scalematrix);
     viewer.model.setNodesFaceColor([this._nodeid], this._color);
     await super.show();
   }
@@ -60,7 +60,7 @@ export class TranslateViewplaneHandle extends StandardHandle {
           viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i]))
         );
         before = netmatrix.transform(new Communicator.Point3(0, 0, 0));
-        viewer.model.setNodeMatrix(this._group._targetNodes[i], Communicator.Matrix.multiply(this._startTargetMatrices[i], transmatrix));
+        await viewer.model.setNodeMatrix(this._group._targetNodes[i], Communicator.Matrix.multiply(this._startTargetMatrices[i], transmatrix));
         after = viewer.model.getNodeNetMatrix(this._group._targetNodes[i]).transform(new Communicator.Point3(0, 0, 0));
       } else {
         let invp = Communicator.Matrix.inverse(viewer.model.getNodeNetMatrix(viewer.model.getNodeParent(this._group._targetNodes[i])));
@@ -72,12 +72,12 @@ export class TranslateViewplaneHandle extends StandardHandle {
         transmatrix.setTranslationComponent(lfirst.x, lfirst.y, lfirst.z);
 
         let trans4 = Communicator.Matrix.multiply(this._startTargetMatrices[i], transmatrix);
-        viewer.model.setNodeMatrix(this._group._targetNodes[i], trans4);
+        await viewer.model.setNodeMatrix(this._group._targetNodes[i], trans4);
       }
     }
     this._group._targetCenter = viewer.model.getNodeNetMatrix(this._group._targetNodes[0]).transform(this._group._targetCenterLocal);
 
-    this._group.updateHandle();
-    super.handleMouseMove(event);
+    await this._group.updateHandle();
+    await super.handleMouseMove(event);
   }
 }

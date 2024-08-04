@@ -10,7 +10,6 @@ export class SHandleManager {
     this._rotateSnapping = 0;
     this._resetSnapping = false;
     this._handleScale = 1.0;
-    this._undoManager = new UndoManager(viewer);
     this._handles = [];
     this._undoManager = new UndoManager(viewer);
     this._handlenode = this._viewer.model.createNode(this._viewer.model.getRootNode(), 'advancedHandles');
@@ -20,11 +19,11 @@ export class SHandleManager {
     this._viewer.overlayManager.setCamera(SHandleManager.overlayIndex, this._viewer.view.getCamera());
 
     this._viewer.setCallbacks({
-      camera: function (type, nodeids, mat1, mat2) {
+      camera: async function (type, nodeids, mat1, mat2) {
         _this._viewer.overlayManager.setCamera(SHandleManager.overlayIndex, _this._viewer.view.getCamera());
 
         for (let i = 0; i < _this._handles.length; i++) {
-          _this._handles[i].cameraUpdate(_this._viewer.view.getCamera());
+          await _this._handles[i].cameraUpdate(_this._viewer.view.getCamera());
         }
       },
     });
@@ -70,6 +69,11 @@ export class SHandleManager {
     this._handles = [];
   }
 
+  async destroy() {
+    await this._viewer.model.deleteNode(this._handlenode);
+    this._handles = [];
+  }
+
   getHandleGroup(nodeid) {
     for (let i = 0; i < this._handles.length; i++) {
       if (this._handles[i]._topNode == nodeid || this._handles[i]._topNode2 == nodeid) {
@@ -78,21 +82,21 @@ export class SHandleManager {
     }
   }
 
-  refreshAll(activeHandle = null) {
+  async refreshAll(activeHandle = null) {
     this._viewer.overlayManager.setCamera(SHandleManager.overlayIndex, this._viewer.view.getCamera());
     for (let i = 0; i < this._handles.length; i++) {
       if (this._handles[i] != activeHandle) {
         this._handles[i]._targetCenter = this._viewer.model
           .getNodeNetMatrix(this._handles[i]._targetNodes[0])
           .transform(this._handles[i]._targetCenterLocal);
-        this._handles[i].updateHandle();
+        await this._handles[i].updateHandle();
       }
     }
   }
 
-  setRelative(relative) {
+  async setRelative(relative) {
     for (let i = 0; i < this._handles.length; i++) {
-      this._handles[i].setRelative(relative);
+      await this._handles[i].setRelative(relative);
     }
   }
 
@@ -180,14 +184,14 @@ export class SHandleManager {
     this._undoManager.setUndoPoint([undoPoint]);
   }
 
-  undo() {
-    this._undoManager.undo();
-    this.refreshAll();
+  async undo() {
+    await this._undoManager.undo();
+    await this.refreshAll();
   }
 
-  redo() {
-    this._undoManager.redo();
-    this.refreshAll();
+  async redo() {
+    await this._undoManager.redo();
+    await this.refreshAll();
   }
 
   setTranslateSnapping(snapping) {
@@ -202,9 +206,9 @@ export class SHandleManager {
     this._resetSnapping = reset;
   }
 
-  setHandleScale(scale) {
+  async setHandleScale(scale) {
     this._handleScale = scale;
-    this.refreshAll();
+    await this.refreshAll();
   }
 
   getHandleNode() {
