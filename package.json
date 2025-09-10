@@ -1,17 +1,23 @@
 {
   "name": "ts3d-hc-shandles",
-  "version": "0.5.4",
-  "description": "",
+  "version": "0.6.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:esm": "webpack --config webpack.esm.config.js",
+    "build:iife": "webpack --config webpack.iife.config.cjs",
+    "build": "npm run build:iife && npm run build:esm"
   },
-  "author": "Guido Hoffmann",
-  "license": "",
+  "peerDependencies": {
+    "@hoops/web-viewer": "*"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/hcSHandles.module.min.js",
+      "default": "./dist/hcSHandles.min.js"
+    }
+  },
   "devDependencies": {
-    "nodemon": "^1.18.3",
-    "webpack-cli": "^4.10.0"
-  },
-  "dependencies": {
-    "webpack": "^5.72.0"
+    "webpack": "^5.72.0",
+    "webpack-cli": "^6.0.1"
   }
 }

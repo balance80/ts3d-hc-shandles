@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 import { StandardHandle, handleType } from './StandardHandle.js';
 import Quaternion from '../quaternion.min.js';
 import * as utility from '../utility.js';

@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 export class StandardHandleGroup {
   constructor(manager) {
     this._manager = manager;

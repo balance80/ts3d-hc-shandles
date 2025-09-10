@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 import { StandardHandleGroup } from "./StandardHandleGroup.js";
 import { RotateHandle } from "../Handles/RotateHandle.js";
 import { RotateTrackballHandle } from "../Handles/RotateTrackballHandle.js";

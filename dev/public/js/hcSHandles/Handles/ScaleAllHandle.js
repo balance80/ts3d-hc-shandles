@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 import { StandardHandle, handleType } from './StandardHandle.js';
 import * as utility from '../utility.js';
 
@@ -41,7 +42,6 @@ export class ScaleAllHandle extends StandardHandle {
 
     for (let i = 0; i < this._startTargetMatrices.length; i++) {
       let smat = new Communicator.Matrix();
-
       smat.setScaleComponent(1 + d, 1 + d, 1 + d);
 
       let center = Communicator.Matrix.inverse(viewer.model.getNodeNetMatrix(this._group._targetNodes[i])).transform(

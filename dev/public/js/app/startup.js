@@ -1,3 +1,5 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
+
 var mySHandleManager = null;
 var relative = true;
 var useSelectionPosition = false;

@@ -1,3 +1,5 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
+
 export function calculateTubeMesh(allPoints, thickness, tess) {
   let faces = [];
   let normals = [];

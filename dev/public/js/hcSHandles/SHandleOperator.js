@@ -1,4 +1,6 @@
-export class SHandleOperator extends Communicator.Operator.OperatorBase {
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
+
+export class SHandleOperator extends Communicator.Operators.OperatorBase {
   constructor(viewer, manager) {
     super(viewer);
     this._viewer = viewer;

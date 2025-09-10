@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 import { StandardHandleGroup } from "./StandardHandleGroup.js";
 import { TranslateHandle } from "../Handles/TranslateHandle.js";
 import { TranslatePlaneHandle } from "../Handles/TranslatePlaneHandle.js";

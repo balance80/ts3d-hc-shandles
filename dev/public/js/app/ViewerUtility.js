@@ -1,3 +1,5 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
+
 class ViewerUtility {
   static ComputeVectorToVectorRotationMatrix(p1, p2) {
     var outmatrix;

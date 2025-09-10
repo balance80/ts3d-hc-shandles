@@ -1,3 +1,4 @@
+import * as Communicator from '@hoops/web-viewer/hoops-web-viewer.mjs';
 import { SHandleManager } from '../SHandleManager.js';
 
 export const handleType = {
