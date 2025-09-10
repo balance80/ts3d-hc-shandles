@@ -28,6 +28,7 @@ export class StandardHandle {
     if (this._nodeid) {
       viewer.overlayManager.addNodes(SHandleManager.overlayIndex, [this._nodeid]);
       viewer.model.setInstanceModifier(Communicator.InstanceModifier.SuppressCameraScale, [this._nodeid], true);
+      viewer.model.setInstanceModifier(Communicator.InstanceModifier.ScreenOriented, [this._nodeid], true);
       viewer.model.setInstanceModifier(Communicator.InstanceModifier.DoNotLight, [this._nodeid], true);
       viewer.model.setInstanceModifier(Communicator.InstanceModifier.ExcludeBounding, [this._nodeid], true);
       viewer.model.setInstanceModifier(Communicator.InstanceModifier.IgnoreCutting, [this._nodeid], true);

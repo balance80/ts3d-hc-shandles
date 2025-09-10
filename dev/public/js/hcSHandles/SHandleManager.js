@@ -1,6 +1,5 @@
 import { UndoManager, RotateUndo } from './UndoManager.js';
 import { SHandleOperator } from './SHandleOperator.js';
-
 import * as utility from './utility.js';
 
 export class SHandleManager {
@@ -59,8 +58,20 @@ export class SHandleManager {
   }
 
   async add(handleGroup, nodeid, center = null, rotation = null) {
-    this._handles.push(handleGroup);
-    await handleGroup.show(nodeid, center, rotation);
+    //  // Retrieve the normal vector of the node
+    //  let normal = await this._viewer.model.getNodeNormal(nodeid);
+    
+    //  // Compute the rotation matrix to align the handle with the normal vector
+    //  let rotationMatrix = utility.ComputeVectorToVectorRotationMatrix(new Communicator.Point3(0, 0, 1), normal);
+     
+    //  // Apply the rotation matrix to the handle
+    //  handleGroup.setRotation(rotationMatrix);
+     
+     // Add the handle to the _handles array
+     this._handles.push(handleGroup);
+     
+     // Show the handle with the specified node ID, center, and rotation
+     await handleGroup.show(nodeid, center, rotation);
   }
 
   async remove() {
